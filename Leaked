@@ -1,0 +1,36 @@
+------------------------------------------------------------------------
+--   _    _______  ___ _____ _   _    ___ _________  ________ _   _   --
+--  | |  | | ___ \/ _ \_   _| | | |  / _ \|  _  \  \/  |_   _| \ | |  --
+--  | |  | | |_/ / /_\ \| | | |_| | / /_\ \ | | | .  . | | | |  \| |  --
+--  | |/\| |    /|  _  || | |  _  | |  _  | | | | |\/| | | | | . ` |  --
+--  \  /\  / |\ \| | | || | | | | | | | | | |/ /| |  | |_| |_| |\  |  --
+--   \/  \/\_| \_\_| |_/\_/ \_| |_/ \_| |_/___/ \_|  |_/\___/\_| \_/  --
+--                                                                    --
+-- nice security retards                                              --
+--                                                                    --
+-- imagine selling a prison life script...                            --
+--                                                                    --
+------------------------------------------------------------------------
+                            
+getgenv().WrathKey='YOUR_SHIT_GOT_CRACKED_LOLOLOL'
+
+local lp=game.Players.LocalPlayer
+local cryptlib=syn.crypt
+local matchurl='https://wrathadmin.000webhostapp.com/server.php?key='..getgenv().WrathKey..'&userid='..lp.UserId
+
+local rhook;
+rhook = hookfunction(syn.request,function(self)
+    if self.Url==matchurl then
+        local keyy=""
+        for i=1,#getgenv().WrathKey do
+            keyy=keyy..'++_+_+_++_+_+'..string.sub(getgenv().WrathKey,i,i)
+        end
+        return {
+            StatusCode=200,
+            Body=cryptlib.base64.encode(cryptlib.custom.hash("sha256",cryptlib.custom.hash("sha224", keyy)))
+        }
+    end
+    return rhook(self)
+end)
+
+loadstring(game:HttpGet("https://github.com/JahsHub/Wrath-Admin-Leaked-LOL/blob/main/WrathAdmin", true))()
